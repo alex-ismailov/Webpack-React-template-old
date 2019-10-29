@@ -1,0 +1,15 @@
+Столкнулся с трудностью, решил использовать ejs в index.html, как показано в видео:
+<% for (var key in htmlWebpackPlugin.files.css) { %>
+    <link href="<%= htmlWebpackPlugin.files.css[key] %>" rel="stylesheet" />
+<% } %>
+Соответсвенно установил:
+inject: false
+в htmlWebpackPlugin из файла webpack.base.conf.js
+
+По итогу все компилируется без ошибок, но перестет работает livereload в webpack-dev-server,
+приходится обновлять окно браузера в ручную через F5.
+
+Livereload начинает работать только если убрать inject: false (ну или inject: true)
+
+Кто-нибудь может что-то подсказать по этому вопросу?
+

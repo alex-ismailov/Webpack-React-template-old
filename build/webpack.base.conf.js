@@ -1,6 +1,6 @@
 const path = require('path');// рекомендуется всегда подключать вручную
 const fs = require('fs')
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const htmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const PATHS = {
@@ -21,7 +21,7 @@ module.exports = {
         app: PATHS.src
     },
     output: {
-        filename: `${PATHS.assets}js/[name].[hash].js`,
+        filename: `${PATHS.assets}js/[name].[chunkhash].js`,
         path: PATHS.dist,
         publicPath: '/' // Необходимо для dev-server, публичный.
     },
@@ -68,12 +68,12 @@ module.exports = {
         }
     },
     plugins: [
-        ...PAGES.map(page => new HtmlWebpackPlugin({
+        ...PAGES.map(page => new htmlWebpackPlugin({
             template: `${PAGES_DIR}/${page}`,
-            filename: `./${page}`
+            filename: `./${page}`,
         })),
         new MiniCssExtractPlugin({
-            filename: `${PATHS.assets}css/[name].[hash].css`
+            filename: `${PATHS.assets}css/[name].[contenthash].css`
         })
     ]
 }

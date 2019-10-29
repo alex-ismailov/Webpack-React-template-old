@@ -11,7 +11,7 @@ const devWebpackConf = merge(baseWebpackConfig, {
         overlay: {
             warnings: true,
             errors: true
-        }
+        },
     },
     devtool: 'cheap-module-eval-source-map',
     plugins: [
