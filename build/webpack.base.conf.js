@@ -71,6 +71,9 @@ module.exports = {
         ...PAGES.map(page => new HtmlWebpackPlugin({
             template: `${PAGES_DIR}/${page}`,
             filename: `./${page}`
-        }))
+        })),
+        new MiniCssExtractPlugin({
+            filename: `${PATHS.assets}css/[name].[hash].css`
+        })
     ]
 }
