@@ -2,6 +2,7 @@ const path = require('path');// рекомендуется всегда подк
 const fs = require('fs')
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const PATHS = {
     src: path.join(__dirname, '../src'),
@@ -58,7 +59,19 @@ module.exports = {
                         options: { sourceMap: true}
                     }
                 ]
-            },
+            }, {
+                test: /\.(png|jpg|gif|svg)$/,
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]'
+                }
+            }, {
+                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]'
+                }
+            }
 
         ]
     },
@@ -74,6 +87,11 @@ module.exports = {
         })),
         new MiniCssExtractPlugin({
             filename: `${PATHS.assets}css/[name].[contenthash].css`
-        })
+        }),
+        new CopyWebpackPlugin([ //каждый новый путь это новый объект
+            { from: `${PATHS.src}/${PATHS.assets}img`, to: `${PATHS.assets}img`},
+            { from: `${PATHS.src}/${PATHS.assets}fonts`, to: `${PATHS.assets}fonts`},
+            { from: `${PATHS.src}/static`, to: ''},
+        ])
     ]
 }

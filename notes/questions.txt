@@ -1,7 +1,9 @@
 Столкнулся с трудностью, решил использовать ejs в index.html, как показано в видео:
+
 <% for (var key in htmlWebpackPlugin.files.css) { %>
     <link href="<%= htmlWebpackPlugin.files.css[key] %>" rel="stylesheet" />
 <% } %>
+
 Соответсвенно установил:
 inject: false
 в htmlWebpackPlugin из файла webpack.base.conf.js
@@ -10,6 +12,31 @@ inject: false
 приходится обновлять окно браузера в ручную через F5.
 
 Livereload начинает работать только если убрать inject: false (ну или inject: true)
-
 Кто-нибудь может что-то подсказать по этому вопросу?
 
+Timestamp: 
+https://youtu.be/eMesm6Ef4VA?list=PLkCrmfIT6LBQWN02hNj6r1daz7965GxsV&t=1311
+
+
+
+****************************************************************************************************
+Хотел еще добавить, если сделать изменения(находясь в --mode development), например в common.js, то эти изменения повлекут изменения хешей у всех трех файлов в dist/ 
+app.3a7d08....css
+app.3a7d08....js
+vendor.3a7d08....js
+Кстати, при builde все три файла также генерируется с одинаковыми хешами.
+
+Все это сказано к теме оптимизации JS, т.е. загрузки пользователем только действительно измененных модулей, 
+так как ему нет необходимости снова подгружать в браузер то, что и так уже лежит в кэше. 
+Но в текущей сборке получается, что если изменить common.js или даже какой-либо scss/modules/block.scss, хеши изменятся у всех.
+Решить проблему удалось используя [chunkhash] вместо [hash], а для css [contenthash]
+Инфа отсюда: 
+https://medium.com/@sahilkkrazy/hash-vs-chunkhash-vs-contenthash-e94d38a32208
+
+Timestamp:
+https://youtu.be/eMesm6Ef4VA?list=PLkCrmfIT6LBQWN02hNj6r1daz7965GxsV&t=821
+
+
+032650
+
+   
